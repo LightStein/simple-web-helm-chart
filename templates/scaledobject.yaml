@@ -1,0 +1,29 @@
+{{- if .Values.autoscaling.enabled -}}
+{{- $fullName := include "simple-web.fullname" . -}}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ $fullName }}-scaledobject
+  labels:
+    {{- include "simple-web.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    name: {{ $fullName }}-deployment
+  minReplicaCount: {{ .Values.autoscaling.minReplicas }}
+  maxReplicaCount: {{ .Values.autoscaling.maxReplicas }}
+  triggers:
+    - type: cpu
+      metadata:
+        type: Utilization
+        value: "{{ .Values.autoscaling.targetCPUUtilizationPercentage }}"
+    - type: memory
+      metadata:
+        type: Utilization
+        value: "{{ .Values.autoscaling.targetMemoryUtilizationPercentage }}"
+    - type: cron
+      metadata:
+        timezone: "{{ .Values.autoscaling.scheduling.timezone }}"
+        start: 0 8 * * *
+        end: 0 24 * * *
+        desiredReplicas: "{{ .Values.autoscaling.scheduling.fixedReplicasForThisPeriod }}"
+{{- end }}

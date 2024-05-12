@@ -9,30 +9,30 @@ This repository contains the Helm chart for the `simple-web` application, design
 
 ### Setup
 
-- [ ] **Repository Initialization**: Initialize and configure the Helm chart repository.
-- [ ] **Clone Repository**: Clone the repository to begin development.
+- [x] **Repository Initialization**: Initialize and configure the Helm chart repository.
+- [x] **Clone Repository**: Clone the repository to begin development.
 
 ### Helm Chart Development
 
-- [ ] **Create Chart Structure**: Establish the base structure of the Helm chart.
-- [ ] **Define Dependencies**: Add any required dependencies.
+- [x] **Create Chart Structure**: Establish the base structure of the Helm chart.
+- [x] **Define Dependencies**: Add any required dependencies.
 
 ### Chart Components
 
-- [ ] **Deployment Template**: Craft the deployment specifications.
-- [ ] **Service Template**: Outline the service access points.
-- [ ] **Ingress Template**: Set up routing via ingress.
-- [ ] **KEDA Autoscaler Template**: Configure autoscaling settings.
+- [x] **Deployment Template**: Craft the deployment specifications.
+- [x] **Service Template**: Outline the service access points.
+- [x] **Ingress Template**: Set up routing via ingress.
+- [x] **KEDA Autoscaler Template**: Configure autoscaling settings.
 
 ### Configuration and Defaults
 
-- [ ] **Parameterize Chart**: Ensure all configurations are adjustable via `values.yaml`.
-- [ ] **Default Values**: Set default values for essential configuration items.
+- [x] **Parameterize Chart**: Ensure all configurations are adjustable via `values.yaml`.
+- [x] **Default Values**: Set default values for essential configuration items.
 
 ### Testing and Validation
 
-- [ ] **Lint Chart**: Check the chart for errors with `helm lint`.
-- [ ] **Dry Run Install**: Test installation configurations with a dry run.
+- [x] **Lint Chart**: Check the chart for errors with `helm lint`.
+- [x] **Dry Run Install**: Test installation configurations with a dry run.
 - [ ] **Install Chart**: Deploy the chart to a test environment.
 
 ### Documentation
