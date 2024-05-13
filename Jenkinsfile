@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  parameters {
+      choice(name: 'ACTION', choices: ['deploy', 'destroy'], description: 'Select whether to deploy or destroy the helm deployment')
+  }
   stages {
     stage('Checkout') {
       steps {
