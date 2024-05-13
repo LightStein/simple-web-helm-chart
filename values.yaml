@@ -41,18 +41,19 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
 
 ingress:
   enabled: true
-  annotations: {}
-  className: nginx  # Assuming nginx is the ingress controller
+  annotations: {
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  }
+  className: nginx
   hosts:
-    - host: "public-ip"  # Replace with actual public IP or a resolvable DNS
-      paths:
-        - path: /thomas
-          pathType: ImplementationSpecific
+    - paths:
+        - path: /thomas(/|$)(.*)
+          pathType: Prefix
   tls: []
 
 autoscaling:
