@@ -13,7 +13,7 @@ pipeline {
       steps {
           script {
               if (params.ACTION == 'deploy') {
-                  sh 'helm upgrade --install simple-web-release ./simple-web-helm-chart --namespace thomas'
+                  sh 'helm upgrade --install simple-web-release . --namespace thomas'
               } else if (params.ACTION == 'destroy') {
                   sh 'helm delete simple-web-release -n thomas'
               }
