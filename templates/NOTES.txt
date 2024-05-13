@@ -1,15 +1,13 @@
-Thank you for installing {{ .Chart.Name }}.
+#################################################
+#                ACCESS YOUR APP                #
+#################################################
 
-Your service has been deployed, and in a few minutes, it should be accessible through its external IP.
+Thank you for installing the Simple-Web application!
 
-To retrieve the external IP of the LoadBalancer service, run the following command:
-kubectl get svc {{ include "simple-web.fullname" . }}-svc -n {{ .Release.Namespace }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+1. Access your application at:
+   [Click here to access the Simple-Web application](http://20.86.195.36/thomas)
 
-Alternatively, you can watch the service until the external IP is assigned:
-kubectl get svc -w {{ include "simple-web.fullname" . }}-svc -n {{ .Release.Namespace }}
+2. If the link above does not work (possibly due to IP changes after a load balancer restart), you can retrieve the current IP by running the following command:
 
-Once the external IP is available, your application can be accessed directly via:
-http://<EXTERNAL_IP>
-
-Additionally, if accessing via Ingress, your application is available at the following path:
-http://<INGRESS_HOST>/thomas
+   ```shell
+   kubectl get svc nginx-ingress-controller -n ingress --output=jsonpath='{.status.loadBalancer.ingress[0].ip}'
