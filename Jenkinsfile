@@ -1,27 +1,33 @@
 pipeline {
-  agent any
-  parameters {
-      choice(name: 'ACTION', choices: ['deploy', 'destroy'], description: 'Select whether to deploy or destroy the helm deployment')
-  }
-  stages {
-    stage('Checkout') {
-      steps {
-        git(url: 'https://github.com/LightStein/simple-web-helm-chart.git', branch: 'main')
-      }
+    agent any
+    parameters {
+        choice(name: 'ACTION', choices: ['deploy', 'default', 'destroy'], defaultValue: 'default', description: 'Select action or default for automatic deploy')
     }
-    stage('Deploy or Destroy') {
-      steps {
-          script {
-              if (params.ACTION == 'deploy') {
-                  sh 'helm upgrade --install simple-web-release . --namespace thomas'
-              } else if (params.ACTION == 'destroy') {
-                  sh 'helm delete simple-web-release -n thomas'
-              }
-          }
-      }
+    environment {
+        KUBECONFIG = '/home/azureuser/.kube/config'
+        IS_MANUAL = "${params.ACTION != 'default'}"  // Evaluates to true if action is explicitly chosen
     }
-  }
-  environment {
-    KUBECONFIG = '/home/azureuser/.kube/config'
-  }
+    stages {
+        stage('Checkout') {
+            steps {
+                git(url: 'https://github.com/LightStein/simple-web-helm-chart.git', branch: 'main')
+            }
+        }
+        stage('Deploy or Destroy') {
+            steps {
+                script {
+                    if (env.IS_MANUAL == 'false' || params.ACTION == 'deploy') {
+                        echo "Deploying..."
+                        sh 'helm upgrade --install simple-web-release . --namespace thomas'
+                    } else if (params.ACTION == 'destroy') {
+                        echo "Destroying..."
+                        sh 'helm delete simple-web-release -n thomas'
+                    } else {
+                        echo "Default action taken: Deploying..."
+                        sh 'helm upgrade --install simple-web-release . --namespace thomas'
+                    }
+                }
+            }
+        }
+    }
 }
