@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        choice(name: 'ACTION', choices: ['deploy', 'default', 'destroy'], defaultValue: 'default', description: 'Select action or default for automatic deploy')
+        choice(name: 'ACTION', choices: ['deploy', 'default', 'destroy'], default: 'default', description: 'Select action or default for automatic deploy')
     }
     environment {
         KUBECONFIG = '/home/azureuser/.kube/config'
