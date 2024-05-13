@@ -7,18 +7,6 @@ pipeline {
       }
     }
 
-    stage('Deploy') {
-      steps {
-        sh 'helm upgrade --install simple-web-release ./simple-web-helm-chart --namespace thomas'
-      }
-    }
-
-    stage('Destroy') {
-      steps {
-        sh 'helm delete simple-web-release -n thomas'
-      }
-    }
-
   }
   environment {
     KUBECONFIG = '/home/azureuser/.kube/config'
