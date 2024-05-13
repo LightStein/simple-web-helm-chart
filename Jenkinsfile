@@ -3,7 +3,6 @@ pipeline {
 
     parameters {
         choice(name: 'ACTION', choices: ['default (deploy)', 'destroy'], description: 'Select action or default for automatic deploy')
-        string(name: 'VERSION', defaultValue: '', description: 'Specify the version to roll back to (only required for rollback action)')
     }
 
     environment {
@@ -60,9 +59,8 @@ pipeline {
             }
             steps {
                 script {
-                    def rollbackVersion = input(message: 'Enter the version to roll back to:', parameters: [string(name: 'VERSION', defaultValue: '', description: 'Specify the version to roll back to')])
-                    echo "Rolling back to version ${rollbackVersion}..."
-                    sh "helm rollback simple-web-release ${rollbackVersion} -n thomas"
+                    echo "Rolling back to the previous version..."
+                    sh "helm rollback simple-web-release 0 -n thomas"
                 }
             }
         }
